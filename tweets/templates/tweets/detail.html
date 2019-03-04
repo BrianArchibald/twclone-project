@@ -1,0 +1,43 @@
+{% extends 'base.html'%} {% block content %}
+
+<div class="card mt-5 mb-5" style="width: 40rem;">
+  <div class="card-body">
+    <!-- <h5 class="card-title">Card title</h5> -->
+    <h7 class="card-subtitle mb-2 text-muted">
+      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }}
+    </h7>
+
+    <p class="card-text pt-3 pb-2">
+      {{ tweet.tweet_text }}
+    </p>
+    <a href=""><button class="btn btn-success ml-3 mb-2">Edit Post</button></a>
+    <a href=""><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a>
+    <a href=""
+      ><button class="center btn btn-secondary ml-3 mb-2">
+        Add Comment
+      </button></a
+    >
+  </div>
+</div>
+
+<div class="card mt-5 mb-5" style="width: 40rem;">
+  <div class="card-body">
+    <!-- <h5 class="card-title">Card title</h5> -->
+    <h7 class="card-subtitle mb-2 text-muted">
+      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }}
+    </h7>
+
+    <p class="card-text pt-3 pb-2">
+      {{ tweet.tweet_text }}
+    </p>
+    <a href=""><button class="btn btn-success ml-3 mb-2">Edit Post</button></a>
+    <a href=""><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a>
+    <a href="{% url 'add_comment' pk=tweet.pk %}"
+      ><button class="center btn btn-secondary ml-3 mb-2">
+        Add Comment
+      </button></a
+    >
+  </div>
+</div>
+
+{% endblock%}

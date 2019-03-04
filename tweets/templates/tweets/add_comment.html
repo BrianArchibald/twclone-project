@@ -1,4 +1,4 @@
-{% extends 'base.html'%} {% block content %} {% for tweet in tweets.all %}
+{% extends 'base.html'%} {% block content %}
 
 <div class="card mt-5 mb-5" style="width: 40rem;">
   <div class="card-body">
@@ -10,18 +10,14 @@
     <p class="card-text pt-3 pb-2">
       {{ tweet.tweet_text }}
     </p>
+    <a href=""><button class="btn btn-success ml-3 mb-2">Edit Post</button></a>
+    <a href=""><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a>
     <a href=""
-      ><button class="btn btn-success btn-sm ml-3 mb-2">Edit Post</button></a
-    >
-    <a href=""
-      ><button class="btn btn-danger btn-sm ml-3 mb-2">Delete Post</button></a
-    >
-    <a href="{% url 'add_comment' %}"
-      ><button class="center btn btn-secondary btn-sm ml-3 mb-2">
+      ><button class="center btn btn-secondary ml-3 mb-2">
         Add Comment
       </button></a
     >
   </div>
 </div>
 
-{%endfor %} {% endblock%}
+{% endblock%}

@@ -1,0 +1,20 @@
+{% extends 'base.html'%} {% block content %} {% if error %}
+{{ error }}
+<br />
+<br />
+{% endif %}
+
+<h1>Create</h1>
+
+<form method="POST" action="{% url 'create' %}">
+  {% csrf_token %}
+  <br />
+  Post:
+  <br />
+  <input type="textbox" cols="10" name="tweet_text" />
+  <br />
+  <br />
+  <input class="btn btn-primary" type="submit" value="Add Post" />
+</form>
+
+{% endblock%}
