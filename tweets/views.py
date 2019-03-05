@@ -43,3 +43,10 @@ def add_comment(request, pk):
             return render(request, 'tweets/add_comment.html', {'error': 'All fields are required'})
     else:
         return render(request, 'tweets/add_comment.html')
+
+# Need Edit Comment
+
+
+# Need Delete Comment
+
+
