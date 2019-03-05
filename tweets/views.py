@@ -63,7 +63,14 @@ def add_comment(request, tweet_id):
         return render(request, 'tweets/add_comment.html')
 
 # Need Edit Comment
-
+@login_required
+def edit_post(request, tweet_id):
+    tweet = Tweet.objects.get(id=tweet_id)
 
 # Need Delete Comment
+@login_required
+def delete(request, tweet_id):
+    Tweet.objects.get(id=tweet_id).delete()
+    return redirect('/')
 
+# Need Messages

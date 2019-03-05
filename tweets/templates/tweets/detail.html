@@ -102,13 +102,49 @@
 {% endblock%} {% block js %}
 
 <script>
-  function add_comment() {}
-
-  function edit_comment(id) {}
-
-  function delete_comment(id) {}
-
-  function clear() {}
-
-  function send_message() {}
+  function add_comment() {
+    $("#message").text("Enter Comment");
+    $("#submit").text("Submit");
+    type = document.getElementById("type");
+    comment = document.getElementById("comment");
+    comment.value = "";
+    type.value = 1;
+    $("#myModal").modal("show");
+  }
+  function edit_comment(id) {
+    $("#message").text("Enter Comment");
+    $("#submit").text("Submit");
+    pk = document.getElementById("pk");
+    type = document.getElementById("type");
+    comment_text = document.getElementById("comment-text" + id);
+    comment = document.getElementById("comment");
+    comment.value = comment_text.innerText.trim();
+    type.value = 2;
+    pk.value = id;
+    $("#myModal").modal("show");
+  }
+  function delete_comment(id) {
+    $("#message").text("Enter Comment");
+    $("#submit").text("Submit");
+    pk = document.getElementById("pk");
+    type = document.getElementById("type");
+    type.value = 3;
+    pk.value = id;
+    $("#submit").click();
+  }
+  function clear() {
+    pk = document.getElementById("pk");
+    type = document.getElementById("type");
+    comment = document.getElementById("comment");
+    pk.value = "";
+    type.value = "";
+    comment.value = "";
+  }
+  function send_message() {
+    $("#message").text("Enter Message");
+    $("#submit").text("Send");
+    $("#myModal").modal("show");
+    type = document.getElementById("type");
+    type.value = 4;
+  }
 </script>

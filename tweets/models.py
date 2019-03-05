@@ -18,3 +18,13 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.comment_text
+
+class Message(models.Model):
+    message = models.CharField(max_length=140)
+    pub_date = models.DateTimeField('date sent')
+    user_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name="received")
+    user_from = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender')
+    read = models.BooleanField()
+
+    def __str__(self):
+        return self.message
