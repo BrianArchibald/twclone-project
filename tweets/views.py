@@ -18,20 +18,37 @@ def create(request):
             tweet.pub_date = timezone.datetime.now()
             tweet.user = request.user
             tweet.save()
-            return redirect('/tweets/' + str(tweet.id))
+            return redirect('/')
         else:
             return render(request, 'tweets/create.html', {'error': 'All fields are required'})
     else:
         return render(request, 'tweets/create.html')
 
+@login_required
 def detail(request, tweet_id):
-    tweet = get_object_or_404(Tweet, pk=tweet_id)
-    return render(request, 'tweets/detail.html', {'tweet':tweet})
+    tweet = get_object_or_404(Tweet, id=tweet_id)
+    comments = Comment.objects.filter(tweet=tweet).order_by('pub_date')
+    # When form is submitted determine the type of request and complete it
+    # 1 create comment, 2 edit comment, 3 delete comment, 4 private message
+    if request.method == "POST":
+        if request.POST.get("type") == "1":
+            comment = request.POST['comment']
+            comments.create(tweet=tweet, pub_date=timezone.datetime.now(), user=request.user, comment_text=comment)
+        elif request.POST.get("type") == "2":
+            comment = Comment.objects.get(id=int(request.POST['id']))
+            comment.comment_text = request.POST['comment']
+            comment.save()
+        elif request.POST.get("type") == "3":
+            Comment.objects.get(id=int(request.POST['id'])).delete()
+        elif request.POST.get("type") == "4":             # Still need to set up messages
+           Message.objects.create(message=request.POST['comment'], pub_date=timezone.datetime.now(),
+                                   user_to=tweet.user, user_from=request.user, read=False)
+    return render(request, 'tweets/detail.html', {'tweet':tweet, 'comments':comments})
 
 
 @login_required
-def add_comment(request, pk):
-    tweet = get_object_or_404(Tweet, pk=pk)
+def add_comment(request, tweet_id):
+    tweet = get_object_or_404(Tweet, pk=tweet_id)
     if request.method == 'POST':
         if request.POST['comment_text']:
             comment = Comment()
@@ -49,5 +66,4 @@ def add_comment(request, pk):
 
 
 # Need Delete Comment
-
 

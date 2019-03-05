@@ -4,40 +4,111 @@
   <div class="card-body">
     <!-- <h5 class="card-title">Card title</h5> -->
     <h7 class="card-subtitle mb-2 text-muted">
-      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }}
+      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }} {% if request.user !=
+      tweet.user %}<span class="btn btn-info btn-sm" onclick="send_message()"
+        >Send Message</span
+      >{% endif %}
     </h7>
 
     <p class="card-text pt-3 pb-2">
-      {{ tweet.tweet_text }}
+      {{ tweet.tweet_text | safe }}
     </p>
-    <a href=""><button class="btn btn-success ml-3 mb-2">Edit Post</button></a>
-    <a href=""><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a>
-    <a href=""
-      ><button class="center btn btn-secondary ml-3 mb-2">
-        Add Comment
-      </button></a
+    {% if request.user == tweet.user %}
+    <a href="{% url 'edit_post' tweet_id=tweet.id %}"
+      ><button class="btn btn-success ml-3 mb-2">Edit Post</button></a
     >
+    <a href="{% url 'edit_post' tweet_id=tweet.id %}"
+      ><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a
+    >
+    {% endif %} {% for comment in comments %}
+    <div class="card mt-4 mb-4" style="padding: 10px">
+      <p class="card-text pt-3 pb-2" id="comment-text{{ comment.id }}">
+        {{ comment.comment_text }}
+      </p>
+      <h7 class="card-subtitle mb-2 text-muted">
+        Commented By {{ comment.user }} on {{ comment.pub_date }}
+      </h7>
+      {% if tweet.user == request.user %}
+      <div class="row">
+        <div class="col-3">
+          <button
+            class="btn btn-danger btn-small"
+            onclick="delete_comment({{ comment.id }})"
+          >
+            Delete Comment
+          </button>
+        </div>
+        <div class="col-3">
+          <button
+            class="btn btn-primary btn-small"
+            onclick="edit_comment({{ comment.id }})"
+          >
+            Edit Comment
+          </button>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <button class="center btn btn-secondary ml-3 mb-2" onclick="add_comment()">
+      Add Comment
+    </button>
   </div>
 </div>
-
-<div class="card mt-5 mb-5" style="width: 40rem;">
-  <div class="card-body">
-    <!-- <h5 class="card-title">Card title</h5> -->
-    <h7 class="card-subtitle mb-2 text-muted">
-      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }}
-    </h7>
-
-    <p class="card-text pt-3 pb-2">
-      {{ tweet.tweet_text }}
-    </p>
-    <a href=""><button class="btn btn-success ml-3 mb-2">Edit Post</button></a>
-    <a href=""><button class="btn btn-danger ml-3 mb-2">Delete Post</button></a>
-    <a href="{% url 'add_comment' pk=tweet.pk %}"
-      ><button class="center btn btn-secondary ml-3 mb-2">
-        Add Comment
-      </button></a
-    >
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="message">Add Comment</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true" onclick="clear()">&times;</span>
+        </button>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="modal-body">
+          <input type="number" style="display: none" id="pk" name="id" />
+          <input type="number" style="display: none" id="type" name="type" />
+          <textarea
+            id="comment"
+            class="form-control"
+            name="comment"
+            rows="5"
+            cols="50"
+          ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button id="submit" type="submit" class="btn btn-primary">
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-dismiss="modal"
+            onclick="clear()"
+          >
+            Close
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+{% endblock%} {% block js %}
 
-{% endblock%}
+<script>
+  function add_comment() {}
+
+  function edit_comment(id) {}
+
+  function delete_comment(id) {}
+
+  function clear() {}
+
+  function send_message() {}
+</script>

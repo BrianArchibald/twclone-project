@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     path('create', views.create, name='create'),
-    path('<int:tweet_id>', views.detail, name='detail'),
-    path('add_comment/<int:pk>/', views.add_comment, name='add_comment')
+    path('<int:tweet_id>', views.detail, name='view'),
+    path('add_comment/<int:tweet_id>', views.add_comment, name='add_comment'),
 ]
