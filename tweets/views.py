@@ -4,8 +4,9 @@ from .models import Tweet
 from django.utils import timezone
 
 # Create your views here.
+@login_required
 def home(request):
-    tweets = Tweet.objects
+    tweets = Tweet.objects.all().order_by('-pub_date')
     return render(request, 'tweets/home.html', {'tweets': tweets})
 
 @login_required

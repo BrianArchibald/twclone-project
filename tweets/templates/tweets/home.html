@@ -2,25 +2,27 @@
 
 <div class="card mt-5 mb-5" style="width: 40rem;">
   <div class="card-body">
-    <!-- <h5 class="card-title">Card title</h5> -->
     <h7 class="card-subtitle mb-2 text-muted">
-      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }}
+      Tweeted By
+      <a href="{% url 'post' user=tweet.user %}">{{ tweet.user }}</a> on
+      {{ tweet.pub_date }}
     </h7>
 
-    <p class="card-text pt-3 pb-2">
-      {{ tweet.tweet_text }}
+    <p class="card-text pt-3 pb-2" id="tweet">
+      <!-- Allows HTML syntax to be rendered, otherwise it will only be text, with safe it will do html tags -->
+      {{ tweet.tweet_text | safe }}
     </p>
-    <a href=""
+    {% if request.user.is_authenticated %}
+    <a href="{% url 'view' tweet_id=tweet.id %}"
+      ><button class="btn btn-success btn-sm ml-3 mb-2">View Post</button></a
+    >{% if request.user == tweet.user %}
+    <a href="{% url 'edit_post' tweet_id=tweet.id %}"
       ><button class="btn btn-success btn-sm ml-3 mb-2">Edit Post</button></a
     >
-    <a href=""
+    <a href="{% url 'delete' tweet_id=tweet.id %}"
       ><button class="btn btn-danger btn-sm ml-3 mb-2">Delete Post</button></a
     >
-    <a href="{% url 'add_comment' %}"
-      ><button class="center btn btn-secondary btn-sm ml-3 mb-2">
-        Add Comment
-      </button></a
-    >
+    {% endif %} {% endif %}
   </div>
 </div>
 
