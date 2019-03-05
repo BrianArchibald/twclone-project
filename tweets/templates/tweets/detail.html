@@ -4,9 +4,8 @@
   <div class="card-body">
     <!-- <h5 class="card-title">Card title</h5> -->
     <h7 class="card-subtitle mb-2 text-muted">
-      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }} {% if request.user !=
-      tweet.user %}<span class="btn btn-info btn-sm" onclick="send_message()"
-        >Send Message</span
+      Tweeted By {{ tweet.user }} on {{ tweet.pub_date }} {% if request.user != tweet.user %}<span class="btn btn-info btn-sm" onclick="send_message()"
+    >Send Message</span
       >{% endif %}
     </h7>
 
@@ -100,7 +99,6 @@
   </div>
 </div>
 {% endblock%} {% block js %}
-
 <script>
   function add_comment() {
     $("#message").text("Enter Comment");
@@ -147,4 +145,7 @@
     type = document.getElementById("type");
     type.value = 4;
   }
+
+
 </script>
+{% endblock %}

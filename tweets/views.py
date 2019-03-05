@@ -74,3 +74,14 @@ def delete(request, tweet_id):
     return redirect('/')
 
 # Need Messages
+@login_required
+def messages(request):
+    messages = Message.objects.filter(user_to=request.user).distinct("user_from")
+    return render(request, 'tweets/messages.html', {'messages':messages})
+
+# Posts by a specific user
+@login_required
+def posts(request, user):
+    my_user = User.objects.get(username=user)
+    tweets = Tweet.objects.filter(user=my_user)
+    return render(request, 'tweets/home.html', {'tweets':tweets})

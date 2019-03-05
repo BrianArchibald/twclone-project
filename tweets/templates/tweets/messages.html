@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+{% block content %} {% for message in messages %}
+{% if message.user_from != request.user %}
+<div class="card mt-5 mb-5" style="width: 40rem;">
+  <div class="card-body">
+    <!-- <h5 class="card-title">Card title</h5> -->
+    <h7 class="card-subtitle mb-2 text-muted">
+      Message from <span class="badge badge-success">{{ message.user_from }}</span> on {{ message.pub_date }} <span class="badge badge-info">New Message</span>
+    </h7>
+
+    <p class="card-text pt-3 pb-2">
+      {{ message.message|truncatewords:5 }}
+    </p>
+      <a href="{% url 'message' user=message.user_from %}" class="btn btn-info">View Message</a>
+  </div>
+</div>
+{% endif %}
+{%endfor %}
+{% endblock%}
+
