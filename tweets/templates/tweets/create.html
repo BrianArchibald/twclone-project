@@ -6,15 +6,43 @@
 
 <h1>Create</h1>
 
-<form method="POST" action="{% url 'create' %}">
+<form method="POST" action="">
   {% csrf_token %}
   <br />
   Post:
   <br />
-  <input type="textbox" cols="10" name="tweet_text" />
+  <textarea
+    id="tweet"
+    class="form-control col-4"
+    cols="10"
+    rows="5"
+    name="tweet_text"
+    maxlength="140"
+    >{{ tweet.tweet_text }}</textarea
+  >
   <br />
   <br />
-  <input class="btn btn-primary" type="submit" value="Add Post" />
+  <input
+    class="btn btn-primary"
+    type="submit"
+    value="{% if edit != 1 %}Add Post{% else %}Save{% endif %}"
+  />
 </form>
 
-{% endblock%}
+{% endblock%} {% block js %}
+<script>
+  $("#tweet").bind("keyup", function(e) {
+    text = $(this).val();
+    url = text.match(/(http|https)(.*).(png|jpg|jpeg|PNG|JPG)/g);
+
+    if (url.length > 0) {
+      if (text.indexOf("<img") !== -1) {
+      } else {
+        img = "<img width='50%' src='" + url[0] + "'>";
+        $(this).val(img + "\n" + text);
+      }
+    }
+  });
+</script>
+
+{% endblock %}

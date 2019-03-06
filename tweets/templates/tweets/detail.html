@@ -145,7 +145,15 @@
     type = document.getElementById("type");
     type.value = 4;
   }
+  var tweet = document.querySelector(".card-text");
+  var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
 
+  var text = tweet.innerText;
+  var chil = tweet.firstElementChild;
+  if (regex.test(text)) {
+    text = text.replace(regex, "");
+    tweet.innerHTML = chil.outerHTML + " " + text;
+  }
 
 </script>
 {% endblock %}
