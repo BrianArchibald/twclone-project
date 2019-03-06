@@ -10,5 +10,5 @@ urlpatterns = [
     path('messages', views.messages, name='message'),
     path('messages/<user>/', views.message_detail, name='message'),
     path('post/<user>', views.posts, name='post'),
-
+    path('search', views.search, name='search')
 ]
