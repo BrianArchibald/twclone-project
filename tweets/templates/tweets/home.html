@@ -2,7 +2,6 @@
 
 <div class="card mt-5 mb-5" style="width: 40rem;">
   <div class="card-body">
-    <!-- <h5 class="card-title">Card title</h5> -->
     <h7 class="card-subtitle mb-2 text-muted">
       Tweeted By <a href="{% url 'post' user=tweet.user %}">{{ tweet.user }}</a> on {{ tweet.pub_date }}
     </h7>
@@ -27,17 +26,17 @@
 
 {%endfor %}
 <script>
-    var tweet = document.querySelectorAll('.card-text');
-    var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-    tweet.forEach(function (item) {
-        var text = item.innerText;
-        var chil = item.firstElementChild;
-        if (regex.test(text)) {
-            text = text.replace(regex, '');
-            item.innerHTML = chil.outerHTML + ' ' + text
-        }
+    // var tweet = document.querySelectorAll('.card-text');
+    // var regex = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+    // tweet.forEach(function (item) {
+    //     var text = item.innerText;
+    //     var chil = item.firstElementChild;
+    //     if (regex.test(text)) {
+    //         text = text.replace(regex, '');
+    //         item.innerHTML = chil.outerHTML + ' ' + text
+    //     }
 
 
-    })
+    // })
 </script>
 {% endblock%}
