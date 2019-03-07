@@ -1,33 +1,134 @@
-{% extends 'base.html'%}
+{% load staticfiles %}
+{% load extra_tag %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load staticfiles %}
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>TwClone</title>
+    <!-- Bootstrap core CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
-{% block content %}
+      <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
 
-<div class="card mt-5 mb-5" style="width: 40rem; margin-bottom: 0; margin-top: 0">
-  <div class="card-body">
-    <h7 class="card-subtitle mb-2 text-muted">
-      Conversations between you and <b>{{ user }}</b>
-    </h7>
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
 
-      {% for message in messages %}
-        <p class="card-text pt-3 pb-2 {% if message.user_to == request.user %}text-right{% else %}text-left{% endif %}">
-          {{ message.message }}
-        </p>
-          <p class="{% if message.user_to == request.user %}text-right{% else %}text-left{% endif %}">Time: {{ message.pub_date }}</p>
-          <hr>
-      {% endfor %}
-  </div>
-</div>
-    <div class="col-4">
-        <form method="post">{% csrf_token %}
-          <div class="form-group">
-              <textarea class="form-control" name="message" rows="2" cols="50"></textarea>
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'home' %}">
+            TwClone
+          </a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link" href="{% url 'create' %}">Create</a>
+                    <a class="nav-item nav-link" href="{% url 'message' %}">Messages <span class="badge badge-success">{{ request.user|messages }}</span></a>
+                <a class="nav-item nav-link" href="javascript:{document.getElementById('logout').submit()}" onclick="">Logout</a>
+                <form id="logout" method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" />
+                </form>
           </div>
-            <div class="form-group">
-                <button id="submit" type="submit" class="btn btn-primary">Send</button>
-            </div>
-        </form>
-    </div>
-{% endblock%}
+        <div>
+            <form class="form-inline my-2 my-lg-0" action="{% url 'search' %}">
+                <input class="form-control mr-sm-2" type="search" name="search">
+                <button type="submit" class="btn btn-success">Search</button>
+            </form>
+      </nav>
+    </header>
 
-{% block js %}
-{% endblock %}
+    <div class="container">
+      <div class="card mt-5 mb-5" style="width: 40rem; margin-bottom: 0; margin-top: 0">
+        <div class="card-body">
+          <h7 class="card-subtitle mb-2 text-muted">
+            Conversations between you and <b>{{ user }}</b>
+          </h7>
+      
+            {% for message in messages %}
+              <p class="card-text pt-3 pb-2 {% if message.user_to == request.user %}text-right{% else %}text-left{% endif %}">
+                {{ message.message }}
+              </p>
+                <p class="{% if message.user_to == request.user %}text-right{% else %}text-left{% endif %}">Time: {{ message.pub_date }}</p>
+                <hr>
+            {% endfor %}
+        </div>
+      </div>
+          <div class="col-4">
+              <form method="post">{% csrf_token %}
+                <div class="form-group">
+                    <textarea class="form-control" name="message" rows="2" cols="50"></textarea>
+                </div>
+                  <div class="form-group">
+                      <button id="submit" type="submit" class="btn btn-primary">Send</button>
+                  </div>
+              </form>
+          </div>
+    </div>
+
+    <footer class="text-muted" style="position: sticky;
+    bottom: 0;
+    width: 100%;">
+      <div class="container text-center">
+      </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- <script src="{% static 'js/jquery-3.1.0.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script> -->
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>
+
+
+
