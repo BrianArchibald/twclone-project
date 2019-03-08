@@ -22,9 +22,6 @@ The requirements were:
 
 Simply sign up with an email and password and begin posting.
 
-## Deployment
-
- 
 
 ## Built With
 
