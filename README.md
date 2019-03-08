@@ -29,7 +29,7 @@ Simply sign up with an email and password and begin posting.
 * CSS
 * JavaScript
 * Django
-* PostgresSQL
+* PostgreSQL
 * jQuery
 * Bootstrap
 
